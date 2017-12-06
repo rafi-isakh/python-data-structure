@@ -1,4 +1,5 @@
 from tree_node import TreeNode
+from collections import deque
 
 class BinarySearchTree(object):
     def __init__(self):
@@ -129,3 +130,51 @@ class BinarySearchTree(object):
                 current = current.right_child 
         
         return (parent, current)
+    
+    # DFS traversal
+    def inorder(self, root):
+        # left subtree, node, right subtree
+        current = root
+        if current is None:
+            return
+
+        self.inorder(current.left_child)
+        print(current.data)
+        self.inorder(current.right_child)
+    
+    def preorder(self, root):
+        # node, left subtree, right subtree
+        current = root
+        if current is None:
+            return
+
+        print(current.data)
+        self.preorder(current.left_child)
+        self.preorder(current.right_child)
+    
+    def postorder(self, root):
+        # left subtree, right subtree, node
+        current = root
+        if current is None:
+            return
+
+        self.postorder(current.left_child)
+        self.postorder(current.right_child)
+        print(current.data)
+
+    # BFS traversal
+    def bfs_traversal(self):
+        nodes_list = []
+        traversal_queue = deque([self.root])
+
+        while(len(traversal_queue) > 0):
+            node = traversal_queue.popleft()
+            nodes_list.append(node.data)
+
+            if node.left_child:
+                traversal_queue.append(node.left_child)
+            
+            if node.right_child:
+                traversal_queue.append(node.right_child)
+        
+        return nodes_list
